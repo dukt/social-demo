@@ -1,0 +1,125 @@
+{% extends "social/_layouts/base" %}
+
+{% if not currentUser %}
+
+    {% set nav = {
+        home: "Home",
+    } %}
+
+{% else %}
+    {% set nav = {
+        home: "Home"|t,
+        profile: "Profile"|t,
+        configure: "Configure Social Login"|t,
+    } %}
+{% endif %}
+
+
+{% block body %}
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">{{ "Toggle navigation"|t }}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{url('social')}}">{{ "Social Demo"|t }}</a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+            <ul class="nav navbar-nav">
+
+                {% for uri, item in nav %}
+
+                    {% if uri == 'home' %}
+                        <li{% if not craft.request.segment(2) %} class="active"{% endif %}><a href="{{ url('social') }}">{{ item }}</a></li>
+                    {% else %}
+                        <li{% if craft.request.segment(2) == uri %} class="active"{% endif %}><a href="{{ url('social/'~uri) }}">{{ item }}</a></li>
+                    {% endif %}
+
+                {% endfor %}
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if currentUser is null %}
+                    <li><a href="{{ url('social/login') }}">{{ "Login"|t }}</a></li>
+                {% else %}
+                    <li><a href="{{craft.social.logoutUrl('social/login')}}">{{ "Logout"|t }}</a></li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <div class="notifications">
+
+        {% for type in ['notice', 'error'] %}
+            {% set message = craft.session.getFlash(type) %}
+            {% if message %}
+                <div class="notification {{ type }}">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+
+
+        {% if errors is defined %}
+            {% for error in errors %}
+                <div class="notification error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+    {% if extraPageHeaderHtml is defined %}
+
+        <div id="extra-headers">
+            {{ extraPageHeaderHtml }}
+        </div>
+
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                {% if tabs is defined and tabs %}
+
+                    <ul class="nav nav-tabs">
+                        {% for tabId, tab in tabs %}
+                            {% if tab %}
+                                {% set tabIsSelected = ((selectedTab is not defined and loop.first) or (selectedTab is defined and selectedTab == tabId)) -%}
+
+                                {% if tabIsSelected and title != tab.label %}
+                                    {% set title = title~' - '~tab.label %}
+                                {%endif -%}
+
+                                <li class="{% if tabIsSelected %}active{% endif %}"><a id="tab-{{ tabId }}" class="{% if tab.class is defined %} {{ tab.class }}{% endif %}" href="{{ tab.url }}">{{ tab.label }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                {% endif %}
+
+                <header>
+                    {% block extraHead %}
+                    {% endblock %}
+                </header>
+
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+
+                        <main role="main">
+                            {% block main %}
+                            {% endblock %}
+                        </main>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

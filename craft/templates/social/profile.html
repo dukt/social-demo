@@ -1,0 +1,112 @@
+{% if not currentUser %}
+    {% redirect 'social/login' %}
+{% endif %}
+
+{% extends "social/_layouts/site" %}
+
+{% set selectedNav = 'profile' %}
+
+{% block main %}
+
+    {# Account Errors #}
+
+    {% if account is defined %}
+        {% set accountErrors = account.errors %}
+
+        {% if accountErrors %}
+            <div class="alert alert-danger">
+                {% for accountError in accountErrors %}
+                    <p>{{(accountError|first)}}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <h2>Profile</h2>
+
+    <hr>
+
+    {# Photo #}
+
+    <form method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="action" value="users/saveUser">
+        <input type="hidden" name="redirect" value="social/profile">
+        <input type="hidden" name="userId" value="{{ user.id }}">
+
+        <div class="form-group">
+
+            <div class="row">
+                <div class="col-md-3">
+
+                    {% if user.photoUrl %}
+                        {% set photoUrl = user.photoUrl %}
+                    {% else %}
+                        {% set photoUrl = resourceUrl('social/images/defaultuser.svg') %}
+                    {% endif %}
+
+                    <img src="{{ photoUrl }}" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+
+                    <label for="userPhoto">{{ (user.photoUrl ? 'Change Photo' : 'Upload Photo') }}</label><br />
+                    <p>
+                        <input type="file" name="userPhoto" value="{{ (user.photoUrl ? 'Change Photo' : 'Upload') }}">
+                    </p>
+
+                    <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo">
+
+                    {% if user.photoUrl %}
+                        <input type="submit" class="btn btn-sm btn-danger" name="deleteUserPhoto" value="Delete Photo">
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <hr>
+
+    {# Profile #}
+
+    <form method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="action" value="users/saveUser">
+        <input type="hidden" name="redirect" value="social/profile">
+        <input type="hidden" name="userId" value="{{ user.id }}">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text"  class="form-control" id="firstName" name="firstName" value="{{ user.firstName }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text"  class="form-control" id="lastName" name="lastName" value="{{ user.lastName }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <input type="text"  class="form-control" id="gender" name="gender" value="{{ user.gender }}">
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text"  class="form-control" id="username" name="username" value="{{ user.username }}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text"  class="form-control" id="email" name="email" value="{{ user.email }}" data-current-email="{{ user.email }}" readonly="true" />
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Save">
+    </form>
+
+{% endblock %}

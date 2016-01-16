@@ -1,0 +1,25 @@
+{% extends "social/_layouts/site" %}
+
+{% if not currentUser %}
+    {% redirect 'social/login' %}
+{% endif %}
+
+{% block main %}
+
+    <div class="masthead text-center">
+
+        {% if not currentUser.photoUrl is null %}
+            {% set photoUrl = user.photoUrl %}
+        {% else %}
+            {% set photoUrl = resourceUrl('social/images/defaultuser.svg') %}
+        {% endif %}
+
+        <img src="{{ photoUrl }}" class="img-rounded" width="128" />
+
+        <h1>{{ "Hello, {name} !"|t({ name: currentUser.friendlyName }) }}</h1>
+
+        <p class="lead">{{ "You are connected to the Social Login demo."|t }}</p>
+
+    </div>
+
+{% endblock main %}

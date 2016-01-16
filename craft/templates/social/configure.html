@@ -1,0 +1,50 @@
+{% if not currentUser %}
+    {% redirect 'social/login' %}
+{% endif %}
+
+{% extends "social/_layouts/site" %}
+
+{% set selectedTab = 'accounts' %}
+
+{% block main %}
+
+    <h2>Configure Social Login</h2>
+
+    {% for loginProvider in craft.social.getLoginProviders() %}
+
+        {% set account = craft.social.getLoginAccountByLoginProvider(loginProvider.handle) %}
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ loginProvider.getIconUrl() }}" class="img-social" />
+            </div>
+
+            <div class="col-md-10">
+
+                <h4>{{ loginProvider.name }}</h4>
+
+                <p>
+                    {% if account %}
+                        You can login using {{ loginProvider.name }}.
+                    {% else %}
+                        {{ loginProvider.name }} login is disabled.
+                    {% endif %}
+                </p>
+
+                {% if account %}
+                    <p>
+                        <a href="{{craft.social.getLoginAccountDisconnectUrl(loginProvider.handle)}}" class="btn btn-default btn-sm">Disable Social Login with {{ loginProvider.name }}</a>
+                    </p>
+                {% else %}
+                    <p>
+                        <a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}" class="btn btn-primary btn-sm">Enable Social Login with {{ loginProvider.name }}</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
