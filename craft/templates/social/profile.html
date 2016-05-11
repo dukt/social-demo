@@ -29,6 +29,7 @@
     {# Photo #}
 
     <form method="post" enctype="multipart/form-data">
+        {{ getCsrfInput() }}
 
         <input type="hidden" name="action" value="users/saveUser">
         <input type="hidden" name="redirect" value="social/profile">
@@ -71,6 +72,7 @@
     {# Profile #}
 
     <form method="post" enctype="multipart/form-data">
+        {{ getCsrfInput() }}
 
         <input type="hidden" name="action" value="users/saveUser">
         <input type="hidden" name="redirect" value="social/profile">
