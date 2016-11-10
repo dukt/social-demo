@@ -8,7 +8,7 @@
 
 {% block main %}
 
-    <h2>Configure Social Login</h2>
+    <h2>Social Login</h2>
 
     {% for loginProvider in craft.social.getLoginProviders() %}
 
@@ -27,19 +27,19 @@
 
                 <p>
                     {% if account %}
-                        You can login using {{ loginProvider.name }}.
+                        You can login to your account using {{ loginProvider.name }}.
                     {% else %}
-                        {{ loginProvider.name }} login is disabled.
+                        {{ loginProvider.name }} login is disabled for your account.
                     {% endif %}
                 </p>
 
                 {% if account %}
                     <p>
-                        <a href="{{craft.social.getLoginAccountDisconnectUrl(loginProvider.handle)}}" class="btn btn-default btn-sm">Disable Social Login with {{ loginProvider.name }}</a>
+                        <a href="{{craft.social.getLoginAccountDisconnectUrl(loginProvider.handle)}}" class="btn btn-default btn-sm">Disable</a>
                     </p>
                 {% else %}
                     <p>
-                        <a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}" class="btn btn-primary btn-sm">Enable Social Login with {{ loginProvider.name }}</a>
+                        <a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}" class="btn btn-primary btn-sm">Enable {{ loginProvider.name }} Login</a>
                     </p>
                 {% endif %}
             </div>
