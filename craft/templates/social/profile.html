@@ -93,20 +93,12 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="gender">Gender</label>
-            <input type="text"  class="form-control" id="gender" name="fields[gender]" value="{{ user.gender }}">
-        </div>
-
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text"  class="form-control" id="username" name="username" value="{{ user.username }}">
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text"  class="form-control" id="email" name="email" value="{{ user.email }}" data-current-email="{{ user.email }}" readonly="true" />
-        </div>
+        {% if user['gender'] is defined %}
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <input type="text"  class="form-control" id="gender" name="fields[gender]" value="{{ user.gender }}">
+            </div>
+        {% endif %}
 
         <input type="submit" class="btn btn-primary" value="Save">
     </form>

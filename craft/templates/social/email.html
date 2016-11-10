@@ -1,0 +1,58 @@
+{% if not currentUser %}
+	{% redirect 'social/login' %}
+{% endif %}
+
+{% extends "social/_layouts/site" %}
+
+{% set selectedNav = 'profile' %}
+
+{% block main %}
+
+	{# Account Errors #}
+
+	{% if account is defined %}
+		{% set accountErrors = account.errors %}
+
+		{% if accountErrors %}
+			<div class="alert alert-danger">
+				{% for accountError in accountErrors %}
+					<p>{{(accountError|first)}}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+	{% endif %}
+
+	<h2>Email</h2>
+
+	{% if not currentUser.password %}
+		<p>To change your email address, <a href="{{ url('social/password') }}">set your password</a> first.</p>
+	{% endif %}
+
+	{% if currentUser.unverifiedEmail %}
+		<div class="alert alert-info">
+			<p>Confirm your new email by clicking on the link we have just sent you at this address: <strong>{{ currentUser.unverifiedEmail }}</strong></p>
+		</div>
+	{% endif %}
+
+	<form method="post" enctype="multipart/form-data">
+
+		<input type="hidden" name="action" value="users/saveUser">
+		<input type="hidden" name="redirect" value="social/email">
+		<input type="hidden" name="userId" value="{{ user.id }}">
+
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="text"  class="form-control" id="email" name="email" value="{{ user.email }}" data-current-email="{{ user.email }}"{{ not currentUser.password ? 'disabled="true"' }} />
+		</div>
+
+		<div class="form-group">
+			<label for="currentPassword">Verify Password</label>
+			<input class="form-control" type="password" id="currentPassword" name="password" {{ not currentUser.password ? 'readonly="true"' }} />
+		</div>
+
+		<input type="submit" class="btn btn-primary" value="Update Email Address" {{ not currentUser.password ? 'disabled="true"' }}>
+	</form>
+
+
+
+{% endblock %}
