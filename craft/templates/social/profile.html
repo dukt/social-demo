@@ -29,7 +29,7 @@
     {# Photo #}
 
     <form method="post" enctype="multipart/form-data">
-        {{ getCsrfInput() }}
+        {{ csrfInput() }}
 
         <input type="hidden" name="action" value="users/saveUser">
         <input type="hidden" name="redirect" value="social/profile">
@@ -40,8 +40,8 @@
             <div class="row">
                 <div class="col-md-3">
 
-                    {% if user.photoUrl %}
-                        {% set photoUrl = user.photoUrl %}
+                    {% if user.photo %}
+                        {% set photoUrl = user.photo.url %}
                     {% else %}
                         {% set photoUrl = resourceUrl('social/images/defaultuser.svg') %}
                     {% endif %}
@@ -50,9 +50,9 @@
                 </div>
                 <div class="col-md-9">
 
-                    <label for="userPhoto">{{ (user.photoUrl ? 'Change Photo' : 'Upload Photo') }}</label><br />
+                    <label for="userPhoto">{{ (user.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
                     <p>
-                        <input type="file" name="userPhoto" value="{{ (user.photoUrl ? 'Change Photo' : 'Upload') }}">
+                        <input type="file" name="userPhoto" value="{{ (user.photo.url is defined ? 'Change Photo' : 'Upload') }}">
                     </p>
 
                     <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo">
@@ -72,7 +72,7 @@
     {# Profile #}
 
     <form method="post" enctype="multipart/form-data">
-        {{ getCsrfInput() }}
+        {{ csrfInput() }}
 
         <input type="hidden" name="action" value="users/saveUser">
         <input type="hidden" name="redirect" value="social/profile">
