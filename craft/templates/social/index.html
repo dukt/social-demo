@@ -7,13 +7,12 @@
 {% block main %}
 
     <div class="masthead text-center">
-
         {% if currentUser.photo %}
             {% set photoUrl = currentUser.photo.url %}
         {% else %}
-            {% set photoUrl = resourceUrl('social/images/defaultuser.svg') %}
+            {% set photoUrl = resourceUrl('social/images/defaultcurrentUser.svg') %}
         {% endif %}
-
+        
         <img src="{{ photoUrl }}" class="img-rounded" width="128" />
 
         <h1>{{ "Hello, {name} !"|t('app', { name: currentUser.friendlyName }) }}</h1>

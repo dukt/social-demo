@@ -33,31 +33,31 @@
 
         <input type="hidden" name="action" value="users/saveUser">
         <input type="hidden" name="redirect" value="social/profile">
-        <input type="hidden" name="userId" value="{{ user.id }}">
+        <input type="hidden" name="userId" value="{{ currentUser.id }}">
 
         <div class="form-group">
 
             <div class="row">
                 <div class="col-md-3">
 
-                    {% if user.photo %}
-                        {% set photoUrl = user.photo.url %}
+                    {% if currentUser.photo %}
+                        {% set photoUrl = currentUser.photo.url %}
                     {% else %}
-                        {% set photoUrl = resourceUrl('social/images/defaultuser.svg') %}
+                        {% set photoUrl = resourceUrl('social/images/defaultcurrentUser.svg') %}
                     {% endif %}
 
                     <img src="{{ photoUrl }}" class="img-responsive img-rounded" />
                 </div>
                 <div class="col-md-9">
 
-                    <label for="userPhoto">{{ (user.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
+                    <label for="userPhoto">{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
                     <p>
-                        <input type="file" name="userPhoto" value="{{ (user.photo.url is defined ? 'Change Photo' : 'Upload') }}">
+                        <input type="file" name="userPhoto" value="{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload') }}">
                     </p>
 
                     <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo">
 
-                    {% if user.photoUrl %}
+                    {% if currentUser.photoUrl %}
                         <input type="submit" class="btn btn-sm btn-danger" name="deleteUserPhoto" value="Delete Photo">
                     {% endif %}
 
@@ -76,19 +76,19 @@
 
         <input type="hidden" name="action" value="users/saveUser">
         <input type="hidden" name="redirect" value="social/profile">
-        <input type="hidden" name="userId" value="{{ user.id }}">
+        <input type="hidden" name="userId" value="{{ currentUser.id }}">
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text"  class="form-control" id="firstName" name="firstName" value="{{ user.firstName }}">
+                    <input type="text"  class="form-control" id="firstName" name="firstName" value="{{ currentUser.firstName }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text"  class="form-control" id="lastName" name="lastName" value="{{ user.lastName }}">
+                    <input type="text"  class="form-control" id="lastName" name="lastName" value="{{ currentUser.lastName }}">
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
         {% if user['gender'] is defined %}
             <div class="form-group">
                 <label for="gender">Gender</label>
-                <input type="text"  class="form-control" id="gender" name="fields[gender]" value="{{ user.gender }}">
+                <input type="text"  class="form-control" id="gender" name="fields[gender]" value="{{ currentUser.gender }}">
             </div>
         {% endif %}
 

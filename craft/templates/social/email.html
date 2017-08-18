@@ -38,11 +38,11 @@
 
 		<input type="hidden" name="action" value="users/saveUser">
 		<input type="hidden" name="redirect" value="social/email">
-		<input type="hidden" name="userId" value="{{ user.id }}">
+		<input type="hidden" name="userId" value="{{ currentUser.id }}">
 
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input type="text"  class="form-control" id="email" name="email" value="{{ user.email }}" data-current-email="{{ user.email }}"{{ not currentUser.password ? 'disabled="true"' }} />
+			<input type="text"  class="form-control" id="email" name="email" value="{{ currentUser.email }}" data-current-email="{{ currentUser.email }}"{{ not currentUser.password ? 'disabled="true"' }} />
 		</div>
 
 		<div class="form-group">
