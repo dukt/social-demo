@@ -49,7 +49,7 @@
                 {% if currentUser is null %}
                     <li><a href="{{ url('social/login') }}">{{ "Login"|t('app') }}</a></li>
                 {% else %}
-                    <li><a href="{{craft.social.logoutUrl('social/login')}}">{{ "Logout"|t('app') }}</a></li>
+                    <li><a href="{{ logoutUrl }}">{{ "Logout"|t('app') }}</a></li>
                 {% endif %}
             </ul>
 
