@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        {% if user['gender'] is defined %}
+        {% if currentUser['gender'] is defined %}
             <div class="form-group">
                 <label for="gender">Gender</label>
                 <input type="text"  class="form-control" id="gender" name="fields[gender]" value="{{ currentUser.gender }}">
