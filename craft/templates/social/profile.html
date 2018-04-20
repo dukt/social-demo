@@ -7,7 +7,6 @@
 {% set selectedNav = 'profile' %}
 
 {% block main %}
-
     {# Account Errors #}
 
     {% if account is defined %}
@@ -28,44 +27,46 @@
 
     {# Photo #}
 
-    <form method="post" enctype="multipart/form-data">
-        {{ csrfInput() }}
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
 
-        <input type="hidden" name="action" value="users/saveUser">
-        <input type="hidden" name="redirect" value="social/profile">
-        <input type="hidden" name="userId" value="{{ currentUser.id }}">
+                {% if currentUser.photo %}
+                    {% set photoUrl = currentUser.photo.url %}
+                {% else %}
+                    {% set photoUrl = view.getAssetManager().getPublishedUrl('@dukt/social/icons/defaultuser.svg', true) %}
+                {% endif %}
 
-        <div class="form-group">
+                <img src="{{ photoUrl }}" class="img-responsive img-rounded" />
+            </div>
+            <div class="col-md-9">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="users/save-user">
+                    <input type="hidden" name="userId" value="{{ currentUser.id }}">
+                    {{ csrfInput() }}
+                    {{ redirectInput('social/profile') }}
 
-            <div class="row">
-                <div class="col-md-3">
-
-                    {% if currentUser.photo %}
-                        {% set photoUrl = currentUser.photo.url %}
-                    {% else %}
-                        {% set photoUrl = resourceUrl('social/images/defaultcurrentUser.svg') %}
-                    {% endif %}
-
-                    <img src="{{ photoUrl }}" class="img-responsive img-rounded" />
-                </div>
-                <div class="col-md-9">
-
-                    <label for="userPhoto">{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
+                    <label for="photo">{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
                     <p>
-                        <input type="file" name="userPhoto" value="{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload') }}">
+                        <input type="file" name="photo" value="{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload') }}">
                     </p>
 
-                    <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo">
+                    <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo" />
+                </form>
 
-                    {% if currentUser.photoUrl %}
-                        <input type="submit" class="btn btn-sm btn-danger" name="deleteUserPhoto" value="Delete Photo">
-                    {% endif %}
+                {% if currentUser.photoUrl %}
+                    <form id="delete-photo-form" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="users/delete-user-photo">
+                        <input type="hidden" name="userId" value="{{ currentUser.id }}">
+                        {{ csrfInput() }}
+                        {{ redirectInput('social/profile') }}
 
-                </div>
+                        <input type="submit" class="btn btn-sm btn-danger" value="Delete Photo" />
+                    </form>
+                {% endif %}
             </div>
         </div>
-
-    </form>
+    </div>
 
     <hr>
 
@@ -74,8 +75,9 @@
     <form method="post" enctype="multipart/form-data">
         {{ csrfInput() }}
 
-        <input type="hidden" name="action" value="users/saveUser">
-        <input type="hidden" name="redirect" value="social/profile">
+        <input type="hidden" name="action" value="users/save-user">
+        {{ redirectInput('social/profile') }}
+
         <input type="hidden" name="userId" value="{{ currentUser.id }}">
 
         <div class="row">
@@ -109,5 +111,32 @@
 
         <input type="submit" class="btn btn-primary" value="Save">
     </form>
-
 {% endblock %}
+
+{% js %}
+
+    var $form = $('#delete-photo-form');
+    var $submitBtn = $form.find('input[type="submit"]');
+
+    $form.submit(function(ev) {
+        ev.preventDefault();
+        $submitBtn.prop('disabled', true);
+
+        // make ajax request
+        $.ajax({
+            type:"POST",
+            data: $(this).serialize(),
+            dataType: 'json',
+            url: "{{ actionUrl('users/delete-user-photo') }}",
+            success: function() {
+                location.reload()
+
+            },
+            error: function() {
+                // Temporary fix for when the `users/delete-user-photo` action complains about missing `users/_photo` template
+                location.reload()
+            }
+        });
+    });
+
+{% endjs %}
