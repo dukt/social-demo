@@ -9,7 +9,7 @@
         {% if currentUser.photo %}
             {% set photoUrl = currentUser.photo.url %}
         {% else %}
-            {% set photoUrl = resourceUrl('social/images/defaultcurrentUser.svg') %}
+            {% set photoUrl = view.getAssetManager().getPublishedUrl('@dukt/social', true)~'/icons/defaultuser.svg' %}
         {% endif %}
         
         <img src="{{ photoUrl }}" class="img-rounded" width="128" />
