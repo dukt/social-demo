@@ -4,6 +4,8 @@
     {% redirect 'social/login' %}
 {% endif %}
 
+{% set selectedNav = 'home' %}
+
 {% block main %}
     <div class="masthead text-center">
         {% if currentUser.photo %}

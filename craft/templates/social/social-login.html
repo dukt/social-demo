@@ -4,7 +4,7 @@
 
 {% extends "social/_layouts/site" %}
 
-{% set selectedTab = 'accounts' %}
+{% set selectedNav = 'socialLogin' %}
 
 {% block main %}
     <h2>Social Login</h2>
@@ -32,13 +32,9 @@
                 </p>
 
                 {% if account %}
-                    <p>
-                        <a href="{{craft.social.getLoginAccountDisconnectUrl(loginProvider.handle)}}" class="btn btn-default btn-sm">Disable</a>
-                    </p>
+                    <p><a href="{{craft.social.getLoginAccountDisconnectUrl(loginProvider.handle)}}" class="btn btn-default btn-sm">Disable</a></p>
                 {% else %}
-                    <p>
-                        <a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}" class="btn btn-primary btn-sm">Enable {{ loginProvider.name }} Login</a>
-                    </p>
+                    <p><a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}" class="btn btn-primary btn-sm">Enable {{ loginProvider.name }} Login</a></p>
                 {% endif %}
             </div>
         </div>

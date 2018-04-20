@@ -6,12 +6,31 @@
     } %}
 {% else %}
     {% set nav = {
-        home: "Home"|t('app'),
-        profile: "Profile"|t('app'),
-        email: "Email"|t('app'),
-        password: "Password"|t('app'),
-        socialLogin: "Social Login"|t('app'),
+        home: {
+            label: "Home"|t('app'),
+            url: url('social'),
+        },
+        profile: {
+            label: "Profile"|t('app'),
+            url: url('social/profile')
+        },
+        email: {
+            label: "Email"|t('app'),
+            url: url('social/email')
+        },
+        password: {
+            label: "Password"|t('app'),
+            url: url('social/password')
+        },
+        socialLogin: {
+            label: "Social Login"|t('app'),
+            url: url('social/social-login')
+        },
     } %}
+{% endif %}
+
+{% if not selectedNav is defined %}
+    {% set selectedNav = false %}
 {% endif %}
 
 {% block body %}
@@ -28,14 +47,8 @@
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                {% for uri, item in nav %}
-
-                    {% if uri == 'home' %}
-                        <li{% if not craft.app.request.segment(2) %} class="active"{% endif %}><a href="{{ url('social') }}">{{ item }}</a></li>
-                    {% else %}
-                        <li{% if craft.app.request.segment(2) == uri %} class="active"{% endif %}><a href="{{ url('social/'~uri) }}">{{ item }}</a></li>
-                    {% endif %}
-
+                {% for key, item in nav %}
+                    <li{% if key == selectedNav %} class="active"{% endif %}><a href="{{ item.url }}">{{ item.label }}</a></li>
                 {% endfor %}
             </ul>
 
