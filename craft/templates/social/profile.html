@@ -121,7 +121,6 @@
         ev.preventDefault();
         $submitBtn.prop('disabled', true);
 
-        // make ajax request
         $.ajax({
             type:"POST",
             data: $(this).serialize(),
