@@ -1,23 +1,20 @@
-{% extends "social/_layouts/site" %}
-
 {% if currentUser %}
     {% redirect 'social' %}
 {% endif %}
 
+{% extends "social/_layouts/site" %}
+
 {% set title = "Login" %}
 
 {% block main %}
-
     <div class="row ">
         <div class="col-md-6 col-md-offset-3">
             <h2>Login</h2>
 
             <form method="post" action="" accept-charset="UTF-8">
                 {{ csrfInput() }}
-
                 <input type="hidden" name="action" value="users/login">
                 <input type="hidden" name="redirect" value="social">
-
 
                 <div class="form-group">
                     <label for="loginName">Email address</label>
@@ -45,11 +42,8 @@
                         Login with {{ provider.name }}
                     </a>
                 </p>
-
             {% endfor %}
-
         </div>
     </div>
-
 {% endblock %}
 

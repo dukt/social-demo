@@ -7,11 +7,9 @@
 {% set selectedTab = 'accounts' %}
 
 {% block main %}
-
     <h2>Social Login</h2>
 
     {% for loginProvider in craft.social.getLoginProviders() %}
-
         {% set account = craft.social.getLoginAccountByLoginProvider(loginProvider.handle) %}
 
         <hr>
@@ -44,7 +42,5 @@
                 {% endif %}
             </div>
         </div>
-
     {% endfor %}
-
 {% endblock %}

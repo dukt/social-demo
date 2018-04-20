@@ -1,11 +1,9 @@
 {% extends "social/_layouts/base" %}
 
 {% if not currentUser %}
-
     {% set nav = {
         home: "Home",
     } %}
-
 {% else %}
     {% set nav = {
         home: "Home"|t('app'),
@@ -15,7 +13,6 @@
         socialLogin: "Social Login"|t('app'),
     } %}
 {% endif %}
-
 
 {% block body %}
     <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,9 +27,7 @@
         </div>
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-
             <ul class="nav navbar-nav">
-
                 {% for uri, item in nav %}
 
                     {% if uri == 'home' %}
@@ -42,7 +37,6 @@
                     {% endif %}
 
                 {% endfor %}
-
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -52,13 +46,10 @@
                     <li><a href="{{ logoutUrl }}">{{ "Logout"|t('app') }}</a></li>
                 {% endif %}
             </ul>
-
         </div>
     </nav>
 
-
     <div class="notifications">
-
         {% for type in ['notice', 'error'] %}
             {% set message = craft.app.session.getFlash(type) %}
             {% if message %}
@@ -66,13 +57,11 @@
             {% endif %}
         {% endfor %}
 
-
         {% if errors is defined %}
             {% for error in errors %}
                 <div class="notification error">{{ error }}</div>
             {% endfor %}
         {% endif %}
-
     </div>
 
     {% if extraPageHeaderHtml is defined %}
@@ -86,9 +75,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
                 {% if tabs is defined and tabs %}
-
                     <ul class="nav nav-tabs">
                         {% for tabId, tab in tabs %}
                             {% if tab %}
@@ -102,7 +89,6 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-
                 {% endif %}
 
                 <header>
@@ -112,15 +98,12 @@
 
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-
                         <main role="main">
                             {% block main %}
                             {% endblock %}
                         </main>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -5,7 +5,6 @@
 {% endif %}
 
 {% block main %}
-
     <div class="masthead text-center">
         {% if currentUser.photo %}
             {% set photoUrl = currentUser.photo.url %}
@@ -18,7 +17,5 @@
         <h1>{{ "Hello, {name} !"|t('app', { name: currentUser.friendlyName }) }}</h1>
 
         <p class="lead">{{ "You are connected to the Social Login demo."|t('app') }}</p>
-
     </div>
-
 {% endblock main %}
