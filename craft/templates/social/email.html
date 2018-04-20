@@ -3,22 +3,19 @@
 {% endif %}
 
 {% extends "social/_layouts/site" %}
+{% import "social/_includes/forms" as forms %}
 
 {% set selectedNav = 'profile' %}
 
 {% block main %}
 
-	{# Account Errors #}
+	{% if user is defined %}
+		{% set userErrors = user.errors %}
 
-	{% if account is defined %}
-		{% set accountErrors = account.errors %}
-
-		{% if accountErrors %}
-			<div class="alert alert-danger">
-				{% for accountError in accountErrors %}
-					<p>{{(accountError|first)}}</p>
-				{% endfor %}
-			</div>
+		{% if userErrors %}
+			{% for userError in userErrors %}
+				{{ forms.errorList(userError) }}
+			{% endfor %}
 		{% endif %}
 	{% endif %}
 
