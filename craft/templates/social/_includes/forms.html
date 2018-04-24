@@ -1,9 +1,40 @@
 {% macro errorList(errors) %}
-    {% if errors %}
-        <div class="alert alert-danger">
-            {% for error in errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
+    {% include "social/_includes/forms/errorList" %}
+{% endmacro %}
+
+
+{# Inputs #}
+
+{% macro text(config) %}
+    {% include "social/_includes/forms/text" with config only %}
+{% endmacro %}
+
+{% macro password(config) %}
+    {% include "social/_includes/forms/text" with config|merge({ type: 'password' }) only %}
+{% endmacro %}
+
+{# Fields #}
+
+{% macro field(config, input) %}
+    {% include "social/_includes/forms/field" with config|merge({ input: input }) only %}
+{% endmacro %}
+
+{% macro textField(config) %}
+    {% import _self as forms %}
+    {% if config.unit is defined %}
+        {% set input %}
+            <div class="flex">
+                <div class="textwrapper">{{ forms.text(config) }}</div>
+                <div class="label light">{{ config.unit }}</div>
+            </div>
+        {% endset %}
+    {% else %}
+        {% set input = forms.text(config) %}
     {% endif %}
+    {{ forms.field(config, input) }}
+{% endmacro %}
+
+{% macro passwordField(config) %}
+    {% import _self as forms %}
+    {{ forms.field(config, forms.password(config)) }}
 {% endmacro %}

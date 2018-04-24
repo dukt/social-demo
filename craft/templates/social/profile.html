@@ -3,24 +3,15 @@
 {% endif %}
 
 {% extends "social/_layouts/site" %}
+{% import "social/_includes/forms" as forms %}
 
 {% set selectedNav = 'profile' %}
 
+{% if user is not defined %}
+    {% set user = currentUser %}
+{% endif %}
+
 {% block main %}
-    {# Account Errors #}
-
-    {% if account is defined %}
-        {% set accountErrors = account.errors %}
-
-        {% if accountErrors %}
-            <div class="alert alert-danger">
-                {% for accountError in accountErrors %}
-                    <p>{{(accountError|first)}}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endif %}
-
     <h2>Profile</h2>
 
     <hr>
@@ -30,8 +21,8 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-3">
-                {% if currentUser.photo %}
-                    {% set photoUrl = currentUser.photo.url %}
+                {% if user.photo %}
+                    {% set photoUrl = user.photo.url %}
                 {% else %}
                     {% set photoUrl = view.getAssetManager().getPublishedUrl('@dukt/social/icons/defaultuser.svg', true) %}
                 {% endif %}
@@ -41,26 +32,30 @@
             <div class="col-md-9">
                 <form method="post" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="users/save-user">
-                    <input type="hidden" name="userId" value="{{ currentUser.id }}">
+                    <input type="hidden" name="userId" value="{{ user.id }}">
                     {{ csrfInput() }}
                     {{ redirectInput('social/profile') }}
 
-                    <label for="photo">{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
+                    <label for="photo">{{ (user.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label><br />
                     <p>
-                        <input type="file" name="photo" value="{{ (currentUser.photo.url is defined ? 'Change Photo' : 'Upload') }}">
+                        <input type="file" name="photo" value="{{ (user.photo.url is defined ? 'Change Photo' : 'Upload') }}">
                     </p>
 
-                    <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo" />
+                    <p>
+                        <input type="submit" class="btn btn-sm btn-primary" value="Upload Photo" />
+                    </p>
                 </form>
 
-                {% if currentUser.photoUrl %}
+                {% if user.photoUrl %}
                     <form id="delete-photo-form" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="users/delete-user-photo">
-                        <input type="hidden" name="userId" value="{{ currentUser.id }}">
+                        <input type="hidden" name="userId" value="{{ user.id }}">
                         {{ csrfInput() }}
                         {{ redirectInput('social/profile') }}
 
-                        <input type="submit" class="btn btn-sm btn-danger" value="Delete Photo" />
+                        <p>
+                            <input type="submit" class="btn btn-sm btn-danger" value="Delete Photo" />
+                        </p>
                     </form>
                 {% endif %}
             </div>
@@ -72,43 +67,53 @@
     {# Profile #}
 
     <form method="post" enctype="multipart/form-data">
-        {{ csrfInput() }}
-
         <input type="hidden" name="action" value="users/save-user">
+        <input type="hidden" name="userId" value="{{ user.id }}">
+        {{ csrfInput() }}
         {{ redirectInput('social/profile') }}
-
-        <input type="hidden" name="userId" value="{{ currentUser.id }}">
 
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text"  class="form-control" id="firstName" name="firstName" value="{{ currentUser.firstName }}">
-                </div>
+                {{ forms.textField({
+                    label: "First Name",
+                    id: "firstName",
+                    name: "firstName",
+                    value: user.firstName,
+                    errors: user.getErrors('firstName')
+                }) }}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text"  class="form-control" id="lastName" name="lastName" value="{{ currentUser.lastName }}">
-                </div>
+                {{ forms.textField({
+                    label: "Last Name",
+                    id: "lastName",
+                    name: "lastName",
+                    value: user.lastName,
+                    errors: user.getErrors('lastName')
+                }) }}
             </div>
         </div>
 
-        {% if currentUser['gender'] is defined %}
-            <div class="form-group">
-                <label for="gender">Gender</label>
-                <input type="text"  class="form-control" id="gender" name="fields[gender]" value="{{ currentUser.gender }}">
-            </div>
+        {% if user['gender'] is defined %}
+            {{ forms.textField({
+                label: "Gender",
+                id: "gender",
+                name: "fields[gender]",
+                value: user.gender,
+                errors: user.getErrors('gender')
+            }) }}
         {% endif %}
 
-        {% if currentUser['location'] is defined %}
-            <div class="form-group">
-                <label for="location">Location</label>
-                <input type="text"  class="form-control" id="location" name="fields[location]" value="{{ currentUser.location }}">
-            </div>
+        {% if user['location'] is defined %}
+            {{ forms.textField({
+                label: "Location",
+                id: "location",
+                name: "fields[location]",
+                value: user.location,
+                errors: user.getErrors('location')
+            }) }}
         {% endif %}
 
-        <input type="submit" class="btn btn-primary" value="Save">
+        <input type="submit" class="btn btn-primary" value="Save" />
     </form>
 {% endblock %}
 
@@ -130,7 +135,6 @@
 
             },
             error: function() {
-                // Temporary fix for when the `users/delete-user-photo` action complains about missing `users/_photo` template
                 location.reload()
             }
         });

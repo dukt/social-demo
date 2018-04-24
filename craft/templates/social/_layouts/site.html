@@ -72,12 +72,6 @@
                 <div class="notification {{ type }}">{{ message }}</div>
             {% endif %}
         {% endfor %}
-
-        {% if errors is defined %}
-            {% for error in errors %}
-                <div class="notification error">{{ error }}</div>
-            {% endfor %}
-        {% endif %}
     </div>
 
     {% if extraPageHeaderHtml is defined %}

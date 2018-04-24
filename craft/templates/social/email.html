@@ -7,45 +7,45 @@
 
 {% set selectedNav = 'email' %}
 
+{% if user is not defined %}
+    {% set user = currentUser %}
+{% endif %}
+
 {% block main %}
-
-	{% if user is defined %}
-		{% set userErrors = user.errors %}
-
-		{% if userErrors %}
-			{% for userError in userErrors %}
-				{{ forms.errorList(userError) }}
-			{% endfor %}
-		{% endif %}
-	{% endif %}
-
 	<h2>Email</h2>
 
-	{% if not currentUser.password %}
+	{% if not user.password %}
 		<p>To change your email address, <a href="{{ url('social/password') }}">set your password</a> first.</p>
 	{% endif %}
 
-	{% if currentUser.unverifiedEmail %}
+	{% if user.unverifiedEmail %}
 		<div class="alert alert-info">
-			<p>Confirm your new email by clicking on the link we have just sent you at this address: <strong>{{ currentUser.unverifiedEmail }}</strong></p>
+			<p>Confirm your new email by clicking on the link we have just sent you at this address: <strong>{{ user.unverifiedEmail }}</strong></p>
 		</div>
 	{% endif %}
 
-	<form method="post" enctype="multipart/form-data">
+	<form method="post">
 		<input type="hidden" name="action" value="users/save-user">
+		<input type="hidden" name="userId" value="{{ user.id }}">
 		{{ redirectInput('social/email') }}
-		<input type="hidden" name="userId" value="{{ currentUser.id }}">
 
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input type="text"  class="form-control" id="email" name="email" value="{{ currentUser.email }}" data-current-email="{{ currentUser.email }}"{{ not currentUser.password ? 'disabled="true"' }} />
-		</div>
+        {{ forms.textField({
+            label: "Email",
+            id: "email",
+            name: "email",
+            value: user.email,
+            errors: user.getErrors('email'),
+			disabled: user.password ? false : true
+        }) }}
 
-		<div class="form-group">
-			<label for="currentPassword">Verify Password</label>
-			<input class="form-control" type="password" id="currentPassword" name="password" {{ not currentUser.password ? 'readonly="true"' }} />
-		</div>
+        {{ forms.passwordField({
+            label: "Verify Password",
+            id: "password",
+            name: "password",
+            errors: user.getErrors('password'),
+			disabled: user.password ? false : true
+        }) }}
 
-		<input type="submit" class="btn btn-primary" value="Update Email Address" {{ not currentUser.password ? 'disabled="true"' }}>
+		<input type="submit" class="btn btn-primary" value="Update Email Address" {{ not user.password ? 'disabled="true"' }}>
 	</form>
 {% endblock %}
