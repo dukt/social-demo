@@ -2,7 +2,10 @@
 
 {% if not currentUser %}
     {% set nav = {
-        home: "Home",
+        home: {
+            label: "Home"|t('app'),
+            url: url('social'),
+        },
     } %}
 {% else %}
     {% set nav = {
