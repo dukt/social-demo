@@ -46,7 +46,7 @@
                     </p>
                 </form>
 
-                {% if user.photoUrl %}
+                {% if user.photo %}
                     <form id="delete-photo-form" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="users/delete-user-photo">
                         <input type="hidden" name="userId" value="{{ user.id }}">
