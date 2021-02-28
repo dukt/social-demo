@@ -10,4 +10,4 @@ This repo contains example templates to get started with Social for Craft CMS.
 ## Resources
 
 - [Social 2 for Craft CMS](https://github.com/dukt/social)
-- [Social 2 Documentation](https://docs.dukt.net/social/v2)
+- [Social 2 Documentation](https://dukt.net/docs/social/v2)
