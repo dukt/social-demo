@@ -1,0 +1,19 @@
+{% set type = type ?? 'button' %}
+{% set value = value ?? 'Submit' %}
+{% set disabled = disabled ?? false %}
+{% set class = class ?? null %}
+
+{% set inputClass = [
+    class,
+    'cursor-pointer flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none transition duration-150 ease-in-out',
+    (type == 'submit' ? 'bg-blue-600' : null),
+    (type == 'submit' and not disabled ? 'hover:bg-blue-500 focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700' : null),
+    (type != 'submit' ? 'bg-gray-600' : null),
+    (type != 'submit' and not disabled ? 'hover:bg-gray-500 focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700' : null),
+    (disabled ? 'opacity-50' : null)
+]|filter|join(' ') %}
+<input type="submit"
+       class="{{ inputClass }}"
+       value="{{ value }}"
+       {%- if disabled is defined and disabled %} disabled {% endif %}
+/>

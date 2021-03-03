@@ -7,42 +7,67 @@
 {% set title = "Login" %}
 
 {% block main %}
-    <div class="row ">
-        <div class="col-md-6 col-md-offset-3">
-            <h2>Login</h2>
+    <div class="">
+        <div class="container mx-auto py-12">
+            <h2 class="text-3xl font-bold text-center">Sign in to your account</h2>
 
-            <form method="post" action="" accept-charset="UTF-8">
+            <form method="post" action="" accept-charset="UTF-8" class="bg-white max-w-md mx-auto px-10 py-8 rounded-lg mt-8 shadow">
                 {{ csrfInput() }}
                 <input type="hidden" name="action" value="users/login">
-                <input type="hidden" name="redirect" value="social">
+                {{ redirectInput('social') }}
 
-                <div class="form-group">
-                    <label for="loginName">Email address</label>
-                    <input name="loginName" type="email" class="form-control" id="loginName" placeholder="Enter username or email" value="{{ craft.app.user.rememberedUsername }}">
+                <div>
+                    <label class="block text-sm font-medium leading-5 text-gray-700" for="loginName">Email address</label>
+                    <div class="mt-1">
+                        <input name="loginName" type="text" class="w-full" id="loginName" placeholder="Enter username or email" value="{{ craft.app.user.rememberedUsername }}">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input name="password" type="password" placeholder="Enter password" class="form-control" id="password">
+                <div class="mt-6">
+                    <label class="block text-sm font-medium leading-5 text-gray-700" for="password">Password</label>
+                    <div class="mt-1">
+                        <input name="password" type="password" placeholder="Enter password" class="w-full" id="password">
+                    </div>
                 </div>
 
-                <p><input type="submit" class="btn btn-primary btn-block btn-social" value="Login with Craft"></p>
+                <div class="mt-6 flex justify-between">
+                    <div class="flex items-center">
+                        {{ input('checkbox', 'rememberMe', '1', {
+                            class: 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'
+                        }) }}
 
-                <p><a href="{{ url('social/forgot-password') }}">Forgot your password ?</a></p>
+                        <label for="rememberMe" class="ml-2 block text-sm leading-5 text-gray-900">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <div class="text-sm leading-5">
+                        <a href="{{ url('social/forgot-password') }}">Forgot your password ?</a>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <input type="submit"
+                           class="cursor-pointer w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out"
+                           value="Sign in with Craft">
+                </div>
+
+
+
+                <div class="text-center text-sm mt-6 text-gray-500">Or continue with…</div>
+
+                <ul class="mt-6 flex -mx-1">
+                    {% for provider in craft.social.getLoginProviders() %}
+                        <li class="flex-1 mx-1">
+                            <a href="{{ craft.social.getLoginUrl(provider.handle, { redirect: 'social' }) }}" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out" title="Login with {{ provider.name }}">
+                                <img class="inline-block w-5 h-5" src="{{ provider.getIconUrl() }}" />
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </form>
 
 
-            <h3 class="text-center">— or —</h3><br />
-
-            {% for provider in craft.social.getLoginProviders() %}
-
-                <p>
-                    <a href="{{ craft.social.getLoginUrl(provider.handle, { redirect: 'social' }) }}" class="btn btn-default btn-block btn-social" data-provider="{{ provider.handle }}">
-                        <img src="{{ provider.getIconUrl() }}" />
-                        Login with {{ provider.name }}
-                    </a>
-                </p>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

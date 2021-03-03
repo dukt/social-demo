@@ -2,10 +2,11 @@
 
 {%- set class = [
     'text',
-    'form-control',
+    'rounded',
+    'border-gray-400',
     (class is defined and class ? class : null),
     (type is defined and type == 'password' ? 'password' : null),
-    (disabled is defined and disabled ? 'disabled' : null),
+    (disabled is defined and disabled ? 'bg-gray-100 text-gray-500' : null),
     (size is defined and size ? null : 'fullwidth')
 ]|filter|join(' ') %}
 

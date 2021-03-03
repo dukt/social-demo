@@ -7,36 +7,46 @@
 {% set selectedNav = 'socialLogin' %}
 
 {% block main %}
-    <h2>Social Login</h2>
+    <h1 class="text-3xl font-bold">Social Login</h1>
 
-    {% for loginProvider in craft.social.getLoginProviders() %}
-        {% set account = craft.social.getLoginAccountByLoginProvider(loginProvider.handle) %}
+    <div class="max-w-xl mx-auto">
+        <div class="mt-6 bg-white rounded-lg shadow">
+            <div class="">
+                {% for loginProvider in craft.social.getLoginProviders() %}
+                    {% set account = craft.social.getLoginAccountByLoginProvider(loginProvider.handle) %}
 
-        <hr>
+                    <div class="border-b border-gray-200 flex items-center px-6 py-5">
+                        <div class="">
+                            <img src="{{ loginProvider.getIconUrl() }}" class="w-8 h-8" />
+                        </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                <img src="{{ loginProvider.getIconUrl() }}" class="img-social" />
-            </div>
+                        <div class="ml-4 flex-1">
+                            <h4 class="font-medium">{{ loginProvider.name }}</h4>
 
-            <div class="col-md-10">
+                            <p class="text-sm text-gray-500">
+                                {% if account %}
+                                    You can login to your account using {{ loginProvider.name }}.
+                                {% else %}
+                                    {{ loginProvider.name }} login is disabled for your account.
+                                {% endif %}
+                            </p>
+                        </div>
 
-                <h4>{{ loginProvider.name }}</h4>
-
-                <p>
-                    {% if account %}
-                        You can login to your account using {{ loginProvider.name }}.
-                    {% else %}
-                        {{ loginProvider.name }} login is disabled for your account.
-                    {% endif %}
-                </p>
-
-                {% if account %}
-                    <p><a href="{{craft.social.getLoginAccountDisconnectUrl(loginProvider.handle)}}" class="btn btn-default btn-sm">Disable</a></p>
-                {% else %}
-                    <p><a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}" class="btn btn-primary btn-sm">Enable {{ loginProvider.name }} Login</a></p>
-                {% endif %}
+                        <div>
+                            {% if account %}
+                                <p>
+                                    <a href="{{ craft.social.getLoginAccountDisconnectUrl(loginProvider.handle) }}"
+                                       class="text-sm hover:bg-gray-100 px-3 py-2 rounded text-red-600">Disable</a>
+                                </p>
+                            {% else %}
+                                <p>
+                                    <a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}"
+                                       class="text-sm hover:bg-gray-100 px-3 py-2 rounded ">Enable</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}
