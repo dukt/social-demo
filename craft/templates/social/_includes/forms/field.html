@@ -22,7 +22,7 @@
     {% if label or instructions %}
         <div class="heading">
             {% if label %}
-                <label {% if labelId %} id="{{ labelId }}"{% endif %} class="control-label{% if required is defined and required %} required{% endif %}"{% if id is defined and id %} for="{{ id }}"{% endif %}>
+                <label {% if labelId %} id="{{ labelId }}"{% endif %} class="block text-sm font-medium leading-5 text-gray-700 {% if required is defined and required %} required{% endif %}"{% if id is defined and id %} for="{{ id }}"{% endif %}>
                     {{- label|raw -}}
                     {%- if translatable %} <span class="extralight" data-icon="language" title="{{ 'This field is translatable.'|t('app') }}"></span>{% endif -%}
                 </label>

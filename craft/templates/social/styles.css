@@ -1,12 +1,6 @@
-body { padding-top: 70px; }
-
-nav { position: relative; z-index: 1; }
-
-.navbar-right { margin-right: 0; }
-
-.nav-tabs { margin-bottom: 20px; }
-
-.masthead { margin: 100px 0; }
+a {
+    color: rgb(28, 100, 242);
+}
 
 .btn-social { border: 0; padding: 10px; font-weight: bold; }
 .btn-social:not(.btn-primary) { background: rgba(0,0,0,0.05); text-align: left; }
@@ -16,7 +10,7 @@ nav { position: relative; z-index: 1; }
 
 .img-social { width: 64px; padding: 7px; border-radius: 10px; }
 
-.notifications { position: relative; text-align: center; margin-top: -20px; }
-.notifications .notification { text-align: center; background: #999; display: inline-block; padding: 7px 14px; color: #fff; }
+.notifications { position: relative; text-align: center; }
+.notifications .notification { text-align: center; background: #999; padding: 7px 14px; color: #fff; }
 .notifications .notification.notice { background-color: #5286d9; }
 .notifications .notification.error { background-color: #da5a47; }

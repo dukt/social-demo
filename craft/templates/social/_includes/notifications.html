@@ -1,0 +1,31 @@
+<div x-data="notifications()" x-init="init" class="notifications">
+    {% for type in ['notice', 'error'] %}
+        {% set message = craft.app.session.getFlash(type) %}
+        {% if message %}
+            <div class="notification {{ type }}" :class="{'hidden': !{{ type }}Visible}">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% js %}
+window.notifications = function() {
+    return {
+        noticeVisible: false,
+        errorVisible: false,
+        init: function() {
+            setTimeout(function() {
+                this.noticeVisible = true
+                this.errorVisible = true
+
+                setTimeout(function() {
+                    this.noticeVisible = false
+                }.bind(this), 3000)
+
+                setTimeout(function() {
+                    this.errorVisible = false
+                }.bind(this), 3000 * 2)
+            }.bind(this), 50)
+        },
+    }
+}
+{% endjs %}

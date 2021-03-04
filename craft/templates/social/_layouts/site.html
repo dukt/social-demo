@@ -37,42 +37,29 @@
 {% endif %}
 
 {% block body %}
-    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">{{ "Toggle navigation"|t('app') }}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{url('social')}}">{{ "Social Demo"|t('app') }}</a>
-        </div>
+    <nav class="bg-white shadow px-8" role="navigation">
+        <div class="container mx-auto flex items-center justify-between">
+            <a class="font-bold text-gray-900" href="{{url('social')}}">{{ "Social Demo"|t('app') }}</a>
 
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="flex -mx-4 text-sm font-medium">
                 {% for key, item in nav %}
-                    <li{% if key == selectedNav %} class="active"{% endif %}><a href="{{ item.url }}">{{ item.label }}</a></li>
+                    <li class="mx-4">
+                        <a class="inline-block px-1 py-4 border-b-2 {% if key == selectedNav %}border-blue-500 text-black{% else %}border-transparent hover:border-gray-200 text-gray-500 hover:text-gray-700{% endif %}" href="{{ item.url }}">{{ item.label }}</a>
+                    </li>
                 {% endfor %}
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="flex text-sm font-medium">
                 {% if currentUser is null %}
-                    <li><a href="{{ url('social/login') }}">{{ "Login"|t('app') }}</a></li>
+                    <li><a class="inline-block px-1 py-4 text-gray-500 hover:text-gray-700" href="{{ url('social/login') }}">{{ "Login"|t('app') }}</a></li>
                 {% else %}
-                    <li><a href="{{ logoutUrl }}">{{ "Logout"|t('app') }}</a></li>
+                    <li><a class="inline-block px-1 py-4 text-gray-500 hover:text-gray-700" href="{{ logoutUrl }}">{{ "Logout"|t('app') }}</a></li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 
-    <div class="notifications">
-        {% for type in ['notice', 'error'] %}
-            {% set message = craft.app.session.getFlash(type) %}
-            {% if message %}
-                <div class="notification {{ type }}">{{ message }}</div>
-            {% endif %}
-        {% endfor %}
-    </div>
+    {% include 'social/_includes/notifications' %}
 
     {% if extraPageHeaderHtml is defined %}
         <div id="extra-headers">
@@ -80,9 +67,9 @@
         </div>
     {% endif %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+    <div class="max-w-xl mx-auto py-12">
+        <div class="">
+            <div class="">
                 {% if tabs is defined and tabs %}
                     <ul class="nav nav-tabs">
                         {% for tabId, tab in tabs %}
@@ -104,8 +91,8 @@
                     {% endblock %}
                 </header>
 
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                <div class="">
+                    <div class="">
                         <main role="main">
                             {% block main %}
                             {% endblock %}
