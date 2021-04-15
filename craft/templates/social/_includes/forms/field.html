@@ -38,5 +38,8 @@
     {% if warning %}
         <p class="warning">{{ warning|md(inlineOnly=true)|replace('/&amp;(\\w+);/', '&$1;')|raw }}</p>
     {% endif %}
-    {% include "social/_includes/forms/errorList" with { errors: errors } %}
+
+    <div class="mt-1">
+        {% include "social/_includes/forms/errorList" with { errors: errors } %}
+    </div>
 </div>
