@@ -2,7 +2,7 @@
 
 This repository contains the example templates to get started with Social for Craft CMS.
 
-The demo uses Tailwind CSS for its styles, and Alpine.js for interactivity.
+The demo uses [Tailwind CSS](https://tailwindcss.com/) for the styles, and [Alpine.js](https://github.com/alpinejs/alpine) for the interactivity.
 
 ## Requirements
 
