@@ -3,7 +3,7 @@
 
 {% set value = (element ? element.getFieldValue(field.handle) : field.normalizeValue(null)) %}
 {% set errors = (element and not static ? element.getErrors(field.handle) : null) %}
-{% set instructions = (not static and field.instructions ? field.instructions|t('site') : null) %}
+{% set instructions = (not static and field.instructions ? field.instructions|t : null) %}
 {% set translatable = field.getIsTranslatable(element) %}
 {% set siteId = (translatable and (element.isLocalized() ?? true)) ? (siteId ?? element.siteId ?? craft.app.sites.currentSite.id) %}
 
@@ -15,7 +15,7 @@
 
 {% if instructions or input %}
     {% embed "social/_includes/forms/field" with {
-        label: field.name|t('site')|e,
+        label: field.name|t|e,
         translatable: translatable,
         siteId: siteId,
         required: (not static ? required : false),

@@ -7,7 +7,7 @@
 {% set selectedNav = 'socialLogin' %}
 
 {% block main %}
-    <h1 class="text-3xl font-bold">Social Login</h1>
+    <h1 class="text-3xl font-bold">{{ "Social Login"|t }}</h1>
 
     <div class="max-w-xl mx-auto">
         <div class="mt-6 bg-white rounded-lg shadow">
@@ -25,9 +25,9 @@
 
                             <p class="text-sm text-gray-500">
                                 {% if account %}
-                                    You can login to your account using {{ loginProvider.name }}.
+                                    {{ "You can login to your account using {provider}."|t('site', { provider: loginProvider.name }) }}
                                 {% else %}
-                                    {{ loginProvider.name }} login is disabled for your account.
+                                    {{ "{provider} login is disabled for your account."|t('site', { provider: loginProvider.name }) }}
                                 {% endif %}
                             </p>
                         </div>
@@ -36,12 +36,12 @@
                             {% if account %}
                                 <p>
                                     <a href="{{ craft.social.getLoginAccountDisconnectUrl(loginProvider.handle) }}"
-                                       class="text-sm hover:bg-gray-100 px-3 py-2 rounded text-red-600">Disable</a>
+                                       class="text-sm hover:bg-gray-100 px-3 py-2 rounded text-red-600">{{ "Disable"|t }}</a>
                                 </p>
                             {% else %}
                                 <p>
                                     <a href="{{ craft.social.getLoginAccountConnectUrl(loginProvider.handle) }}"
-                                       class="text-sm hover:bg-gray-100 px-3 py-2 rounded ">Enable</a></p>
+                                       class="text-sm hover:bg-gray-100 px-3 py-2 rounded ">{{ "Enable"|t }}</a></p>
                             {% endif %}
                         </div>
                     </div>

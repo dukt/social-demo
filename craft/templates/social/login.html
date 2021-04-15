@@ -12,8 +12,8 @@
     <div class="">
         <div class="container mx-auto py-12">
             <div class="text-center">
-                <h2 class="text-3xl font-bold">Sign in to your account</h2>
-                <p class="mt-4">Don't have an account? <a href="{{ url('social/register') }}">Register</a>.</p>
+                <h2 class="text-3xl font-bold">{{ "Sign in to your account"|t }}</h2>
+                <p class="mt-4">{{ 'Don’t have an account? <a href="{url}">Register</a>.'|t('site', { url: url('social/register') })|raw }}</p>
             </div>
 
             <div class="bg-white max-w-md mx-auto px-10 py-8 rounded-lg mt-8 shadow">
@@ -25,7 +25,7 @@
                     <div class="space-y-4">
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "Username or email",
+                            label: "Username or email"|t,
                             id: "loginName",
                             name: "loginName",
                             value: craft.app.user.rememberedUsername,
@@ -33,7 +33,7 @@
 
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "Password",
+                            label: "Password"|t,
                             id: "password",
                             name: "password",
                             type: 'password',
@@ -47,12 +47,12 @@
                             }) }}
 
                             <label for="rememberMe" class="ml-2 block text-sm leading-5 text-gray-900">
-                                Remember me
+                                {{ "Remember me"|t }}
                             </label>
                         </div>
 
                         <div class="text-sm leading-5">
-                            <a href="{{ url('social/forgot-password') }}">Forgot your password?</a>
+                            <a href="{{ url('social/forgot-password') }}">{{ "Forgot your password?"|t }}</a>
                         </div>
                     </div>
 
@@ -61,11 +61,11 @@
                             type: 'submit',
                             style: 'submit',
                             class: 'w-full',
-                            value: 'Sign in with Craft',
+                            value: 'Sign in with Craft'|t,
                         }) }}
                     </div>
 
-                    <div class="text-center text-sm mt-6 text-gray-500">Or continue with…</div>
+                    <div class="text-center text-sm mt-6 text-gray-500">{{ "Or continue with…"|t }}</div>
 
                     {% include 'social/_includes/social-login-buttons' %}
                 </form>

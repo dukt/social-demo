@@ -12,10 +12,8 @@
     <div class="">
         <div class="container mx-auto py-12">
             <div class="text-center">
-                <h2 class="text-3xl font-bold">Register an account</h2>
-                <p class="mt-4">Already have an account? <a
-                            href="{{ url('social/login') }}">Log into your
-                        account</a>.</p>
+                <h2 class="text-3xl font-bold">{{ "Register an account"|t }}</h2>
+                <p class="mt-4">{{ 'Already have an account? <a href="{url}">Log into your account</a>.'|t('site', { url : url('social/login') })|raw }}</p>
             </div>
 
             <div class="bg-white max-w-md mx-auto px-10 py-8 rounded-lg mt-8 shadow">
@@ -27,7 +25,7 @@
                     <div class="space-y-4">
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "Username",
+                            label: "Username"|t,
                             id: "username",
                             name: "username",
                             value: user.username ?? null,
@@ -36,7 +34,7 @@
 
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "First Name",
+                            label: "First Name"|t,
                             id: "firstName",
                             name: "firstName",
                             value: user.firstName ?? null,
@@ -45,7 +43,7 @@
 
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "Last Name",
+                            label: "Last Name"|t,
                             id: "lastName",
                             name: "lastName",
                             value: user.lastName ?? null,
@@ -54,7 +52,7 @@
 
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "Email",
+                            label: "Email"|t,
                             id: "email",
                             name: "email",
                             type: 'email',
@@ -64,7 +62,7 @@
 
                         {{ forms.textField({
                             class: 'w-full',
-                            label: "Password",
+                            label: "Password"|t,
                             id: "password",
                             name: "password",
                             type: 'password',
@@ -79,12 +77,12 @@
                                 type: 'submit',
                                 style: 'submit',
                                 class: 'w-full',
-                                value: 'Register with Craft',
+                                value: 'Register with Craft'|t,
                             }) }}
                         </div>
                     </div>
 
-                    <div class="text-center text-sm mt-6 text-gray-500">Or register with…</div>
+                    <div class="text-center text-sm mt-6 text-gray-500">{{ "Or register with…"|t }}</div>
 
                     {% include 'social/_includes/social-login-buttons' %}
                 </form>

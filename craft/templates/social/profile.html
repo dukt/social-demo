@@ -12,7 +12,7 @@
 {% endif %}
 
 {% block main %}
-    <h1 class="text-3xl font-bold">Profile</h1>
+    <h1 class="text-3xl font-bold">{{ "Profile"|t }}</h1>
 
     <div class="mt-6 bg-white px-12 py-8 rounded-lg shadow">
         {# Photo #}
@@ -33,17 +33,17 @@
                     {{ csrfInput() }}
                     {{ redirectInput('social/profile') }}
 
-                    <label for="photo" class="block text-sm font-medium leading-5 text-gray-700">{{ (user.photo.url is defined ? 'Change Photo' : 'Upload Photo') }}</label>
+                    <label for="photo" class="block text-sm font-medium leading-5 text-gray-700">{{ (user.photo.url is defined ? 'Change Photo'|t : 'Upload Photo'|t) }}</label>
 
                     <div class="mt-2">
-                        <input type="file" name="photo" value="{{ (user.photo.url is defined ? 'Change Photo' : 'Upload') }}">
+                        <input type="file" name="photo" value="{{ (user.photo.url is defined ? 'Change Photo'|t : 'Upload'|t) }}">
                     </div>
 
                     {{ forms.button({
                         type: 'submit',
                         class: 'mt-6',
                         size: 'sm',
-                        value: 'Upload Photo',
+                        value: 'Upload Photo'|t,
                     }) }}
                 </form>
 
@@ -60,7 +60,7 @@
                             style: 'danger',
                             class: 'mt-6',
                             size: 'xs',
-                            value: 'Delete Photo',
+                            value: 'Delete Photo'|t,
                         }) }}
                     </form>
                 {% endif %}
@@ -79,7 +79,7 @@
             <div class="">
                     {{ forms.textField({
                         class: 'w-full',
-                        label: "First Name",
+                        label: "First Name"|t,
                         id: "firstName",
                         name: "firstName",
                         value: user.firstName,
@@ -88,7 +88,7 @@
                     {{ forms.textField({
                         fieldClass: 'mt-2',
                         class: 'w-full',
-                        label: "Last Name",
+                        label: "Last Name"|t,
                         id: "lastName",
                         name: "lastName",
                         value: user.lastName,
@@ -100,7 +100,7 @@
                 {{ forms.textField({
                     fieldClass: 'mt-2',
                     class: 'w-full',
-                    label: "Gender",
+                    label: "Gender"|t,
                     id: "gender",
                     name: "fields[gender]",
                     value: user.gender,
@@ -112,7 +112,7 @@
                 {{ forms.textField({
                     fieldClass: 'mt-2',
                     class: 'w-full',
-                    label: "Location",
+                    label: "Location"|t,
                     id: "location",
                     name: "fields[location]",
                     value: user.location,
@@ -124,7 +124,7 @@
                 type: 'submit',
                 style: 'submit',
                 class: 'mt-6',
-                value: 'Save',
+                value: 'Save'|t,
             }) }}
         </form>
     </div>
