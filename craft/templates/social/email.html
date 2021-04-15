@@ -1,5 +1,5 @@
 {% if not currentUser %}
-	{% redirect 'social/login' %}
+    {% redirect 'social/login' %}
 {% endif %}
 
 {% extends "social/_layouts/site" %}
@@ -12,50 +12,54 @@
 {% endif %}
 
 {% block main %}
-	<div class="max-w-xl mx-auto">
-		<h1 class="text-3xl font-bold">Email</h1>
+    <div class="max-w-xl mx-auto">
+        <h1 class="text-3xl font-bold">Email</h1>
 
-		{% if not user.password %}
-			<p>To change your email address, <a href="{{ url('social/password') }}">set your password</a> first.</p>
-		{% endif %}
+        {% if not user.password %}
+            <p>To change your email address, <a
+                        href="{{ url('social/password') }}">set your
+                    password</a> first.</p>
+        {% endif %}
 
-		{% if user.unverifiedEmail %}
-			<div class="alert alert-info">
-				<p>Confirm your new email by clicking on the link we have just sent you at this address: <strong>{{ user.unverifiedEmail }}</strong></p>
-			</div>
-		{% endif %}
+        {% if user.unverifiedEmail %}
+            <div class="alert alert-info">
+                <p>Confirm your new email by clicking on the link we have just
+                    sent you at this address:
+                    <strong>{{ user.unverifiedEmail }}</strong></p>
+            </div>
+        {% endif %}
 
-		<form method="post" class="mt-6 bg-white px-12 py-8 rounded-lg shadow">
-			<input type="hidden" name="action" value="users/save-user">
-			<input type="hidden" name="userId" value="{{ user.id }}">
-			{{ redirectInput('social/email') }}
+        <form method="post" class="mt-6 bg-white px-12 py-8 rounded-lg shadow">
+            <input type="hidden" name="action" value="users/save-user">
+            <input type="hidden" name="userId" value="{{ user.id }}">
+            {{ redirectInput('social/email') }}
 
-			{{ forms.textField({
-				class: 'w-full',
-				label: "Email",
-				id: "email",
-				name: "email",
-				value: user.email,
-				errors: user.getErrors('email'),
-				disabled: user.password ? false : true
-			}) }}
+            {{ forms.textField({
+                class: 'w-full',
+                label: "Email",
+                id: "email",
+                name: "email",
+                value: user.email,
+                errors: user.getErrors('email'),
+                disabled: user.password ? false : true
+            }) }}
 
-			{{ forms.passwordField({
-				fieldClass: 'mt-2',
-				class: 'w-full',
-				label: "Verify Password",
-				id: "password",
-				name: "password",
-				errors: user.getErrors('password'),
-				disabled: user.password ? false : true
-			}) }}
+            {{ forms.passwordField({
+                fieldClass: 'mt-2',
+                class: 'w-full',
+                label: "Verify Password",
+                id: "password",
+                name: "password",
+                errors: user.getErrors('password'),
+                disabled: user.password ? false : true
+            }) }}
 
-			{{ forms.button({
-				class: 'mt-6',
-				type: 'submit',
-				value: 'Update Email Address',
-				disabled: user.password ? false : true
-			}) }}
-		</form>
-	</div>
+            {{ forms.button({
+                class: 'mt-6',
+                type: 'submit',
+                value: 'Update Email Address',
+                disabled: user.password ? false : true
+            }) }}
+        </form>
+    </div>
 {% endblock %}
