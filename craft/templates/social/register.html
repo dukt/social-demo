@@ -74,9 +74,14 @@
                     </div>
 
                     <div class="mt-6">
-                        <input type="submit"
-                               class="cursor-pointer w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out"
-                               value="Register with Craft">
+                        <div class="mt-6">
+                            {{ forms.button({
+                                type: 'submit',
+                                style: 'submit',
+                                class: 'w-full',
+                                value: 'Register with Craft',
+                            }) }}
+                        </div>
                     </div>
 
                     <div class="text-center text-sm mt-6 text-gray-500">Or register with…</div>

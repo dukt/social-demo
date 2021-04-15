@@ -1,18 +1,25 @@
 {% set type = type ?? 'button' %}
+{% set style = style ?? 'button' %}
+{% set size = size ?? 'base' %}
 {% set value = value ?? 'Submit' %}
 {% set disabled = disabled ?? false %}
 {% set class = class ?? null %}
 
 {% set inputClass = [
     class,
-    'cursor-pointer flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none transition duration-150 ease-in-out',
-    (type == 'submit' ? 'bg-blue-600' : null),
-    (type == 'submit' and not disabled ? 'hover:bg-blue-500 focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700' : null),
-    (type != 'submit' ? 'bg-gray-600' : null),
-    (type != 'submit' and not disabled ? 'hover:bg-gray-500 focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700' : null),
+    'cursor-pointer flex justify-center border border-transparent font-medium rounded-md text-white focus:outline-none transition duration-150 ease-in-out',
+    (size == 'base' ? 'py-2 px-4 text-base' : null),
+    (size == 'sm' ? 'py-2 px-4 text-sm' : null),
+    (size == 'xs' ? 'py-1 px-3 text-xs' : null),
+    (style == 'submit' ? 'bg-blue-600' : null),
+    (style == 'submit' and not disabled ? 'hover:bg-blue-500 focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700' : null),
+    (style == 'danger' ? 'bg-red-600' : null),
+    (style == 'danger' and not disabled ? 'hover:bg-red-500 focus:border-red-700 focus:shadow-outline-red active:bg-red-700' : null),
+    (style != 'submit' and style != 'danger' ? 'bg-gray-600' : null),
+    (style != 'submit' and style != 'danger' and not disabled ? 'hover:bg-gray-500 focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700' : null),
     (disabled ? 'opacity-50' : null)
 ]|filter|join(' ') %}
-<input type="submit"
+<input type="{{ type }}"
        class="{{ inputClass }}"
        value="{{ value }}"
        {%- if disabled is defined and disabled %} disabled {% endif %}
