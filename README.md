@@ -1,6 +1,8 @@
 # Social Demo
 
-This repo contains example templates to get started with Social for Craft CMS.
+This repository contains the example templates to get started with Social for Craft CMS.
+
+The demo uses Tailwind CSS for its styles, and Alpine.js for interactivity.
 
 ## Requirements
 
