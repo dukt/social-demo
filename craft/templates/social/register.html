@@ -1,0 +1,98 @@
+{% if currentUser %}
+    {% redirect 'social' %}
+{% endif %}
+
+{% extends "social/_layouts/site" %}
+
+{% set title = "Login" %}
+
+{% import "social/_includes/forms" as forms %}
+
+{% block main %}
+    <div class="">
+        <div class="container mx-auto py-12">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold">Register an account</h2>
+                <p class="mt-4">Already have an account? <a
+                            href="{{ url('social/login') }}">Log into your
+                        account</a>.</p>
+            </div>
+
+            <div class="bg-white max-w-md mx-auto px-10 py-8 rounded-lg mt-8 shadow">
+                <form method="post" accept-charset="UTF-8">
+                    {{ csrfInput() }}
+                    {{ actionInput('users/save-user') }}
+                    {{ redirectInput('social') }}
+
+                    <div class="space-y-4">
+                        {{ forms.textField({
+                            class: 'w-full',
+                            label: "Username",
+                            id: "username",
+                            name: "username",
+                            value: user.username ?? null,
+                            errors: user.getErrors('username') ?? null,
+                        }) }}
+
+                        {{ forms.textField({
+                            class: 'w-full',
+                            label: "First Name",
+                            id: "firstName",
+                            name: "firstName",
+                            value: user.firstName ?? null,
+                            errors: user.getErrors('firstName') ?? null,
+                        }) }}
+
+                        {{ forms.textField({
+                            class: 'w-full',
+                            label: "Last Name",
+                            id: "lastName",
+                            name: "lastName",
+                            value: user.lastName ?? null,
+                            errors: user.getErrors('lastName') ?? null,
+                        }) }}
+
+                        {{ forms.textField({
+                            class: 'w-full',
+                            label: "Email",
+                            id: "email",
+                            name: "email",
+                            type: 'email',
+                            value: user.email ?? null,
+                            errors: user.getErrors('email') ?? null,
+                        }) }}
+
+                        {{ forms.textField({
+                            class: 'w-full',
+                            label: "Password",
+                            id: "password",
+                            name: "password",
+                            type: 'password',
+                            value: user.password ?? null,
+                            errors: user.getErrors('password') ?? null,
+                        }) }}
+                    </div>
+
+                    <div class="mt-6">
+                        <input type="submit"
+                               class="cursor-pointer w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out"
+                               value="Register with Craft">
+                    </div>
+
+                    <div class="text-center text-sm mt-6 text-gray-500">Or register with…</div>
+
+                    <ul class="mt-6 flex -mx-1">
+                        {% for provider in craft.social.getLoginProviders() %}
+                            <li class="flex-1 mx-1">
+                                <a href="{{ craft.social.getLoginUrl(provider.handle, { redirect: 'social' }) }}" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out" title="Login with {{ provider.name }}">
+                                    <img class="inline-block w-5 h-5" src="{{ provider.getIconUrl() }}" />
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
